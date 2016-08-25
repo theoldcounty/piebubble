@@ -1,0 +1,186 @@
+{
+  "allocationsId": "4f4f3f52129643a88b1848e8d70dab29",
+  "sessionId": "cea209b5-f89c-49f8-bc3d-abe03f69c4dc",
+  "allocationsModels": [
+    {
+      "name": "Test MB DATA - Updated",
+      "isin": "GB0298665B00",
+      "sedol": "B0298665",
+      "assetClass": "Eq",
+      "region": "EM",
+      "sector": "Mix",
+      "weight": 0.03882358964606754
+    },
+    {
+      "name": "MR No name",
+      "isin": "GBBACA555CFA",
+      "sedol": "BBACA555",
+      "assetClass": "Eq",
+      "region": "Dev",
+      "sector": "Mix",
+      "weight": 0.031224171853628923
+    },
+    {
+      "name": "take 3",
+      "isin": "GBF485562094",
+      "sedol": "BF485562",
+      "assetClass": "Eq",
+      "region": "Dev",
+      "sector": "Mix",
+      "weight": 0.032153070852319686
+    },
+    {
+      "name": "Martins Magic Beans",
+      "isin": "GB87E0C8A495",
+      "sedol": "B87E0C8A",
+      "assetClass": "Mix",
+      "region": "Dev",
+      "sector": "P&I",
+      "weight": 0.049248103802634564
+    },
+    {
+      "name": "^DJC",
+      "isin": "GB7ED179F6C4",
+      "sedol": "B7ED179F",
+      "assetClass": "B",
+      "region": "Dev",
+      "sector": "Govt",
+      "weight": 0.0835003401086885
+    },
+    {
+      "name": "PHLX Gold/Silver Sector Index",
+      "isin": "GB7F94AE8967",
+      "sedol": "B7F94AE8",
+      "assetClass": "B",
+      "region": "Dev",
+      "sector": "Govt",
+      "weight": 0.08717753673539544
+    },
+    {
+      "name": "S&P 100 INDEX",
+      "isin": "GBCE9A4089FB",
+      "sedol": "BCE9A408",
+      "assetClass": "Eq",
+      "region": "EM",
+      "sector": "Mix",
+      "weight": 0.05503360858975578
+    },
+    {
+      "name": "NASDAQ Composite Index",
+      "isin": "GBCFB96D6A22",
+      "sedol": "BCFB96D6",
+      "assetClass": "Eq",
+      "region": "Dev",
+      "sector": "Mix",
+      "weight": 0.05289421522662941
+    },
+    {
+      "name": "ESTX50 EUR P Index",
+      "isin": "GBC6E3A25DF2",
+      "sedol": "BC6E3A25",
+      "assetClass": "Eq",
+      "region": "EM",
+      "sector": "Mix",
+      "weight": 0.02236854616335457
+    },
+    {
+      "name": "S&P/ASX 200 Index",
+      "isin": "GBC15BFCFE78",
+      "sedol": "BC15BFCF",
+      "assetClass": "Eq",
+      "region": "Dev",
+      "sector": "Mix",
+      "weight": 0.05069996562342288
+    },
+    {
+      "name": "HANG SENG INDEX",
+      "isin": "GB8DAD38DEAC",
+      "sedol": "B8DAD38D",
+      "assetClass": "Eq",
+      "region": "EM",
+      "sector": "Mix",
+      "weight": 0.02853073046569291
+    },
+    {
+      "name": "FTSE AIM INDEX",
+      "isin": "GB913CC29F29",
+      "sedol": "B913CC29",
+      "assetClass": "B",
+      "region": "Dev",
+      "sector": "Govt",
+      "weight": 0.03015813225473775
+    },
+    {
+      "name": "SPDR® S&P 500 ETF",
+      "isin": "GB0B18A5DB78",
+      "sedol": "B0B18A5D",
+      "assetClass": "B",
+      "region": "Dev",
+      "sector": "Govt",
+      "weight": 0.03945443640698942
+    },
+    {
+      "name": "VelocityShares 3x Long Natural Gas ETN",
+      "isin": "GBB217CCD6A5",
+      "sedol": "BB217CCD",
+      "assetClass": "Eq",
+      "region": "Dev",
+      "sector": "Mix",
+      "weight": 0.06507778614843367
+    },
+    {
+      "name": "VelocityShares 3x Long Crude Oil ETN",
+      "isin": "GBBF5C959474",
+      "sedol": "BBF5C959",
+      "assetClass": "C",
+      "region": "Mix",
+      "sector": "Water",
+      "weight": 0.04653089137733048
+    },
+    {
+      "name": "iPath® S&P 500 VIX ST Futures™ ETN",
+      "isin": "GB5025BCF83F",
+      "sedol": "B5025BCF",
+      "assetClass": "B",
+      "region": "Dev",
+      "sector": "Corp",
+      "weight": 0.06785168335515393
+    },
+    {
+      "name": "iShares MSCI Emerging Markets",
+      "isin": "GB727905D078",
+      "sedol": "B727905D",
+      "assetClass": "Eq",
+      "region": "EM",
+      "sector": "Mix",
+      "weight": 0.02388806401357509
+    },
+    {
+      "name": "Financial Select Sector SPDR® ETF",
+      "isin": "GBF3EB2E1BA1",
+      "sedol": "BF3EB2E1",
+      "assetClass": "Eq",
+      "region": "Dev",
+      "sector": "Mix",
+      "weight": 0.0686854982043724
+    },
+    {
+      "name": "iShares China Large-Cap",
+      "isin": "GB0BF946D1B9",
+      "sedol": "B0BF946D",
+      "assetClass": "Mix",
+      "region": "Dev",
+      "sector": "P&I",
+      "weight": 0.07132591189356427
+    },
+    {
+      "name": "IShares MSCI Japan",
+      "isin": "GB084FAD05C2",
+      "sedol": "B084FAD0",
+      "assetClass": "B",
+      "region": "Dev",
+      "sector": "Govt",
+      "weight": 0.05537371727825279
+    }
+  ]
+}

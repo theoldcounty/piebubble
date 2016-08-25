@@ -1,0 +1,161 @@
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<style>
+
+body {
+  background: #293950;
+  color: #ecf0f0;
+}
+
+section {
+  margin: 0 auto;
+}
+
+h1 {
+  font-weight: normal;
+  font-size: 2.4em;
+  margin-bottom: 0;
+}
+
+a {
+  color: gold;
+}
+
+</style>
+
+
+<button class="randomize">randomize</button>
+<section id="graph"></section>
+
+<script>
+(function() {
+
+    var diameter = 250;
+
+    var svg = d3.select('#graph').append('svg')
+      .attr('width', diameter)
+      .attr('height', diameter);
+
+    var bubble = d3.layout.pack()
+      .size([diameter, diameter])
+      .value(function(d) {
+        return d.size;
+      })
+      .padding(3);
+
+    var color = d3.scale.ordinal()
+      .domain(["Lorem ipsum", "dolor sit", "amet", "consectetur", "adipisicing"])
+      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]);
+
+
+  function randomData() {
+
+      var data1 = {
+        "children": [
+                {
+                  name: "AA",
+                  className: "aa",
+                  size: 170
+                },
+                {
+                  name: "BB",
+                  className: "bb",
+                  size: 393
+                },
+                {
+                  name: "CC",
+                  className: "cc",
+                  size: 293
+                },
+                {
+                  name: "DD",
+                  className: "dd",
+                  size: 89
+                }
+              ]
+      };
+
+      var data2 = {
+        "children": [
+                {
+                  name: "AA",
+                  className: "aa",
+                  size: 120
+                },
+                {
+                  name: "BB",
+                  className: "bb",
+                  size: 123
+                },
+                {
+                  name: "CC",
+                  className: "cc",
+                  size: 193
+                },
+                {
+                  name: "DD",
+                  className: "dd",
+                  size: 289
+                }
+              ]
+      };
+
+
+
+          var j = Math.floor((Math.random() * 2) + 1);
+          console.log("j", j);
+
+          if (j == 1) {
+            return data1;
+          } else {
+            return data2;
+          }
+
+        }
+
+  change(randomData());
+
+  d3.select(".randomize")
+    .on("click", function() {
+      change(randomData());
+    });
+
+  function change(data) {
+    console.log("data", data);
+
+    // generate data with calculated layout values
+    var nodes = bubble.nodes(data)
+      .filter(function(d) {
+         return !d.children;
+      }); // filter out the outer bubble
+
+
+    var vis = svg.selectAll('circle')
+      .data(nodes);
+
+    vis.enter()
+      .insert("circle")
+      .attr('transform', function(d) {
+        return 'translate(' + d.x + ',' + d.y + ')';
+      })
+      .attr('r', function(d) {
+        return d.r;
+      })
+      .style("fill", function(d) {
+        return color(d.name);
+      })
+      .attr('class', function(d) {
+        return d.className;
+      });
+
+    vis
+      .transition().duration(1000)
+
+    vis.exit()
+      .remove();
+
+  };
+
+  })();
+</script>
