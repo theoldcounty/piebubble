@@ -1,0 +1,316 @@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<button class="randomize">randomize</button>
+<body>
+
+
+
+<script>
+
+var width = 800,
+  height = 600,
+  radius = Math.min(width, height) / 2;
+
+var color = d3.scale.ordinal()
+  .range(["#46a2de", "#7b3cc9", "#31d89c", "#de5942", "#ffa618"]);
+
+var arc = d3.svg.arc()
+  .outerRadius(radius - 66)
+  .innerRadius(radius - 70);
+
+var pie = d3.layout.pie()
+  .sort(null)
+  .value(function(d) {
+    return d.value;
+  });
+
+var svg = d3.select("body").append("svg")
+  .attr("width", width)
+  .attr("height", height)
+  .append("g")
+  .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
+
+function randomData() {
+  var data1 = [{
+    "label": "AA",
+    "value": 0.911035425558026,
+    "children": [{
+      name: "some text aa",
+      group: "AA",
+      size: 120
+    }]
+  }, {
+    "label": "BB",
+    "value": 0.08175111844879179,
+    "children": [{
+      name: "some text bb",
+      group: "BB",
+      size: 123
+    }]
+  }, {
+    "label": "CC",
+    "value": 0.25262439557273275,
+    "children": [{
+      name: "some text cc",
+      group: "CC",
+      size: 193
+    }]
+  }, {
+    "label": "DD",
+    "value": 0.8301366989535612,
+    "children": [{
+      name: "some text dd",
+      group: "DD",
+      size: 29
+    }, {
+      name: "some text dd",
+      group: "DD",
+      size: 289
+    }]
+  }, {
+    "label": "EE",
+    "value": 0.0517762265780517,
+    "children": [{
+      name: "some text ee",
+      group: "EE",
+      size: 389
+    }, {
+      name: "some text ee",
+      group: "EE",
+      size: 89
+    }]
+  }];
+
+  var data2 = [{
+    "label": "AA",
+    "value": 0.243879179,
+    "children": [{
+      name: "some text aa",
+      group: "AA",
+      size: 12320
+    }]
+  }, {
+    "label": "BB",
+    "value": 0.243879179,
+    "children": [{
+      name: "some text bb",
+      group: "BB",
+      size: 1123
+    }]
+  }, {
+    "label": "CC",
+    "value": 0.2342439557273275,
+    "children": [{
+      name: "some text cc",
+      group: "CC",
+      size: 1923
+    }]
+  }, {
+    "label": "DD",
+    "value": 0.2349535612,
+    "children": [{
+      name: "some text dd",
+      group: "DD",
+      size: 29
+    }, {
+      name: "some text dd",
+      group: "DD",
+      size: 289
+    }]
+  }, {
+    "label": "EE",
+    "value": 0.2345780517,
+    "children": [{
+      name: "some text ee",
+      group: "EE",
+      size: 389
+    }, {
+      name: "some text ee",
+      group: "EE",
+      size: 89
+    }]
+  }];
+
+  var j = Math.floor((Math.random() * 2) + 1);
+
+  if (j == 1) {
+    return data1;
+  } else {
+    return data2;
+  }
+}
+
+
+
+
+//change(randomData());
+d3.select(".randomize")
+  .on("click", function() {
+    var data = randomData()
+    console.log("data", data); change(randomData());
+  });
+
+
+change(randomData());
+
+function change(data){
+
+
+var g = svg.selectAll(".arc")
+  .data(pie(data))
+  .enter().append("g")
+  .attr("class", "arc");
+
+g.append("path")
+  .attr("d", arc)
+  .transition()
+        .duration(1000)
+  .style("fill", function(d) {
+    return color(d.data.label);
+  });
+
+arc
+  .outerRadius(radius - 10)
+  .innerRadius(0);
+
+
+//create zone regions
+var zones = [];
+g.append("circle")
+  .attr("transform", function(d) {
+    zones[d.data.label] = arc.centroid(d);
+    return "translate(" + arc.centroid(d) + ")";
+  })
+  .attr("r", "1px")
+  .style("fill", function(d) {
+    return "black" //color(d.data.group); 
+  });
+
+g.append("g")
+  .attr("class", function(d, i) {
+    return "bubble" + i;
+  }).transition()
+        .duration(1500)
+  .attr("transform", function(d) {
+    zones[d.data.label] = arc.centroid(d);
+    return "translate(" + arc.centroid(d) + ")";
+  });
+//create zone regions
+
+//loop through data and for EACH children array paint dots.
+$.each(data, function(index, value) {
+  setBubbleChart(160, index, value.children);
+});
+//custom bubble chart    
+
+
+
+
+}
+
+
+//custom bubble chart
+function bubbledata(data) {
+  return $.extend(true, {}, {
+    "children": data
+  }); // return deep clone
+}
+
+function setBubbleChart(width, index, data) {
+  //_create bubble
+  var diameter = width / 2; //take half/width
+
+  var bubs = svg.select(".bubble" + index).append("g")
+    .attr("class", "bubs");
+
+  bubs.attr("transform", "translate(" + -diameter / 2 + "," + -diameter / 2 + ")");
+
+  var bubble = d3.layout.pack()
+    .size([diameter, diameter])
+    .value(function(d) {
+      return d.size;
+    })
+    .padding(3);
+
+  //_create bubble
+  var data = bubbledata(data);
+
+  var nodes = bubble.nodes(data)
+    .filter(function(d) {
+      return !d.children;
+    }); // filter out the outer bubble
+
+  var bubbles = bubs.selectAll('circle')
+    .data(nodes);
+
+  bubbles.enter()
+    .insert("circle")
+    .attr('transform', function(d) {
+      return 'translate(' + d.x + ',' + d.y + ')';
+    })
+    .attr('r', function(d) {
+      return d.r;
+    })
+    .style("fill", function(d) {
+      return color(d.group);
+    });
+
+
+  bubbles.enter()
+    .insert("text")
+    .attr('transform', function(d) {
+      return 'translate(' + d.x + ',' + d.y + ')';
+    })
+    .attr("class", "bubbletext")
+    .attr("dy", ".3em")
+    .style("text-anchor", "middle")
+    .text(function(d) {
+      if (d.r > 15) {
+        return (Math.floor(d.value / d.parent.value * 100)) + "%";
+      }
+    });
+
+  bubbles = bubbles.transition()
+    .transition()
+    .duration(250)
+    .attr('transform', function(d) {
+      return 'translate(' + d.x + ',' + d.y + ')';
+    })
+    .attr('r', function(d) {
+      return d.r;
+    })
+    .ease('sine');
+}
+
+
+function type(d) {
+  d.value = +d.value;
+  return d;
+}
+
+</script>
+
+
+<style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 560px;
+  height: 500px;
+  position: relative;
+  background: #292527;
+}
+
+path.slice {
+  stroke-width: 2px;
+}
+
+.bubbletext {
+  fill: #ffffff;
+  font-size: 14px;
+}
+
+</style>

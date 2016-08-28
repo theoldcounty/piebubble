@@ -170,7 +170,7 @@
 							{
 								name: "some text aa",
 								group: "AA",
-								size: 120
+								size: 54
 							}
 						]
 				    }, {
@@ -180,7 +180,7 @@
 							{
 								name: "some text bb",
 								group: "BB",
-								size: 123
+								size: 678
 							}
 						]
 				    }, {
@@ -190,7 +190,7 @@
 							{
 								name: "some text cc",
 								group: "CC",
-								size: 193
+								size: 33
 							}
 						]
 				    }, {
@@ -200,12 +200,12 @@
 							{
 								name: "some text dd",
 								group: "DD",
-								size: 29
+								size: 456
 							},
 							{
 								name: "some text dd",
 								group: "DD",
-								size: 289
+								size: 2469
 							}
 						]
 				    }, {
@@ -215,12 +215,12 @@
 							{
 								name: "some text ee",
 								group: "EE",
-								size: 389
+								size: 324
 							},
 							{
 								name: "some text ee",
 								group: "EE",
-								size: 89
+								size: 129
 							}
 						]
 				    }];
@@ -281,12 +281,14 @@
 					   // generate data with calculated layout values
 
 					    var data = bubbledata(data);
+					    //console.log("bub d", data);
 					   
 					    var nodes = bubble.nodes(data)
 					      .filter(function(d) {
 					         return !d.children;
 					      }); // filter out the outer bubble
 
+					    console.log("nodes", nodes);
 
 					    var bubbles = bubs.selectAll('circle')
 					      .data(nodes);
@@ -297,17 +299,32 @@
 					        return 'translate(' + d.x + ',' + d.y + ')';
 					      })
 					      .attr('r', function(d) {
+					      	//console.log("dr", d.r)
 					        return d.r;
 					      })
 					      .style("fill", function(d) {
 					        return color(d.group);
 					      });
 
+					    bubbles = bubbles.transition()
+							.transition()
+							.duration(2000)
+							.attr('transform', function(d) {
+					        	return 'translate(' + d.x + ',' + d.y + ')';
+					      	})
+							.attr('r', function(d) {
+					      		//console.log("dr", d.r)
+					        	return d.r;
+					      	})
+							.ease('sine')  
+
 					    bubbles
 					      .transition().duration(1000)
 
+					     /*
 					    bubbles.exit()
 					      .remove();
+						*/
 
 					    /* ------- ANIMATE BUBBLES -------*/
 					      

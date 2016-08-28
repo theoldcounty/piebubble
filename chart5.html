@@ -1,0 +1,195 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<body>
+
+<style>
+.arc text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+</style>
+
+<script>
+
+var width = 960,
+    height = 500,
+    radius = Math.min(width, height) / 2;
+
+var color = d3.scale.ordinal()
+    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+var arc = d3.svg.arc()
+    .outerRadius(radius - 60)
+    .innerRadius(radius - 70);
+
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return d.value; });
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
+  var data = [
+    {
+      "group": "<5",
+      "value": 1000,
+      "children": [
+        {
+          "group": "<5",     
+          "label": "Mel",
+          "value": 1000,
+          "totalGroupValue": 1000
+        }
+      ]
+    },
+    {
+      "group": "5-13",
+      "value": 1000,
+      "children": [
+        {
+          "group": "5-13",        
+          "label": "Erica",
+          "value": 1000,
+          "totalGroupValue": 1000
+        }
+      ]
+    },
+    {
+      "group": "14-17",
+      "value": 2000,
+      "children": [
+        {
+          "group": "14-17",
+          "label": "Jessica",
+          "value": 1500,
+          "totalGroupValue": 2000  
+        },
+        {
+          "group": "14-17",
+          "label": "Jill",
+          "value": 500,
+          "totalGroupValue": 2000  
+        }
+      ]
+    },
+    {
+      "group": "18-24",
+      "value": 1300,
+      "children": [
+        {
+          "group": "18-24",
+          "label": "Jerry",
+          "value": 500,          
+          "totalGroupValue": 1300 
+        },
+        {
+          "group": "18-24",
+          "label": "Ben",
+          "value": 500,
+          "totalGroupValue": 1300  
+        },
+        {
+          "group": "18-24",
+          "label": "Billy",
+          "value": 300,
+          "totalGroupValue": 1300  
+        }
+      ]
+    },
+    {
+      "group": "25-44",
+      "value": 1000,
+      "children": [
+        {
+          "group": "25-44",
+          "label": "Kelly",
+          "value": 1000,
+          "totalGroupValue": 1000
+        }
+      ]
+    }
+  ];  
+
+
+  var g = svg.selectAll(".arc")
+      .data(pie(data))
+    .enter().append("g")
+      .attr("class", "arc");
+
+  g.append("path")
+      .attr("d", arc)
+      .style("fill", function(d) {
+        return color(d.data.group); 
+      });
+
+  arc
+    .outerRadius(radius - 10)
+    .innerRadius(0);
+	  
+
+//create zone regions
+var zones = [];
+g.append("circle")
+  .attr("transform", function(d) {
+
+    zones[d.data.group] = arc.centroid(d);
+    //zones.push(obj);
+
+    return "translate(" + arc.centroid(d) + ")"; 
+  })
+  .attr("r", "1px")
+  .style("fill", function(d) { 
+    return "black"//color(d.data.group); 
+  });
+//create zone regions
+
+
+//custom bubble chart
+function makeBubbles(transform, group, radius){
+    g.append("circle")
+    .attr("transform", function(d) {
+      return "translate("+transform+")"; 
+    })
+    .attr("r", radius)
+    .style("stroke", function(d) { 
+      return "black";//color(group); 
+    })
+    .style("fill", function(d) { 
+      return color(group); 
+    });
+}
+
+//loop through data and for EACH children array paint dots.
+$.each(data, function( index, value ) {
+
+  $.each(value.children, function( i, v ) {
+      var randomX = Math.floor(Math.random() * 101) - 50;
+      var randomY = Math.floor(Math.random() * 101) - 50;      
+
+      var zoneregion = zones[v.group];
+      var transform = (zoneregion[0] - randomX)+","+(zoneregion[1]+randomY);
+      var group = v.group;
+      var radius = ((v.value/v.totalGroupValue)*100) *0.5;
+      makeBubbles(transform, group, radius);
+
+  });    
+});    
+//custom bubble chart    
+   
+
+function type(d) {
+  d.value = +d.value;
+  return d;
+}
+
+</script>
